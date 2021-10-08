@@ -4,7 +4,7 @@
 
 A new Flutter project.
 update
-flutter pub upgrade
+# flutter pub upgrade
 
 ## Getting Started
 
