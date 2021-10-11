@@ -42,8 +42,10 @@ class CastingCards extends StatelessWidget {
 class _CastCard extends StatelessWidget {
   final Cast actor;
   const _CastCard(this.actor);
+
   @override
   Widget build(BuildContext context) {
+    
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 5),
       width: 110,

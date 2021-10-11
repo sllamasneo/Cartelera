@@ -46,11 +46,22 @@ class MoviesProvider extends ChangeNotifier {
 
   Future<List<Cast>> getMovieCast(int movieId) async {
     if (moviesCast.containsKey(movieId)) return moviesCast[movieId]!;
-    final jsonData =
-        await _getJsonData('/3/movie/$movieId/creadits', _popularPage);
+    final jsonData =await _getJsonData('/3/movie/$movieId/creadits', _popularPage);
     // se sinplifica el mapeado  ya que agregando  todo en models  es mas fasil navegar y optener los datos   de  la peticion   e utilisacion https://app.quicktype.io/
     final creditsResponse = CreditsResponse.fromJson(jsonData);
     moviesCast[movieId] = creditsResponse.cast;
     return creditsResponse.cast;
   }
+
+
+ 
+   Future<List<Movie>> searchMovies(String query) async {
+     final url = Uri.https(_baseUrl, '3/search/movie',
+        {'api_key': _apiKey,
+         'language': _language,
+          'query': query});
+     final response = await http.get(url);
+    final  searchRespons=SearchResponse.fromJson(response.body);
+    return searchRespons.results;
+   }
 }
