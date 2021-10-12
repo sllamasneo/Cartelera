@@ -1,5 +1,3 @@
-
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_peliculas/models/models.dart';
 
@@ -56,8 +54,9 @@ class _MovieSliderState extends State<MovieSlider> {
                 controller: scrollController,
                 scrollDirection: Axis.horizontal,
                 itemCount: widget.movies.length,
-                itemBuilder: (_, int index) =>
-                    _MoviePoster(widget.movies[index])),
+                itemBuilder: (_, int index) => _MoviePoster(
+                    widget.movies[index],
+                    '${widget.title}-${index}-${widget.movies[index].id}}')),
           )
         ],
       ),
@@ -67,9 +66,11 @@ class _MovieSliderState extends State<MovieSlider> {
 
 class _MoviePoster extends StatelessWidget {
   final Movie movies;
-  const _MoviePoster(this.movies);
+  final String heroId;
+  const _MoviePoster(this.movies, this.heroId);
   @override
   Widget build(BuildContext context) {
+    movies.heroId = heroId;
     return Container(
       width: 130,
       height: 150,
@@ -77,16 +78,19 @@ class _MoviePoster extends StatelessWidget {
       child: Column(
         children: [
           GestureDetector(
-            onTap: () => Navigator.pushNamed(context, 'details',
-                arguments: movies),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: FadeInImage(
-                placeholder: NetworkImage('assets/img/no-image.jpg'),
-                image: NetworkImage(movies.fullPosterPathImg),
-                width: 130,
-                height: 140,
-                fit: BoxFit.cover,
+            onTap: () =>
+                Navigator.pushNamed(context, 'details', arguments: movies),
+            child: Hero(
+              tag: movies.heroId!,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: FadeInImage(
+                  placeholder: NetworkImage('assets/img/no-image.jpg'),
+                  image: NetworkImage(movies.fullPosterPathImg),
+                  width: 130,
+                  height: 140,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           ),
