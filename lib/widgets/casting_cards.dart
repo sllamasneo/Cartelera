@@ -16,7 +16,7 @@ class CastingCards extends StatelessWidget {
     return FutureBuilder(
         future: moviesProvider.getMovieCast(movieId),
         builder: (_, AsyncSnapshot<List<Cast>> snapshot) {
-          print(snapshot.hasData);
+         
           if (!snapshot.hasData) {
             return Container(
               constraints: BoxConstraints(maxWidth: 150),
